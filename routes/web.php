@@ -1,56 +1,16 @@
 <?php
 
-use App\Http\Controllers\DashboardPostController;
+use App\Http\Controllers\FriendController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
-use App\Models\Category;
-use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
-    return view('home',[
-        "title" => "Home",
-        "active" => 'home'
-    ]);
-});
-Route::get('/about', function () {
-    return view('about',[
-        'title' => 'about',
-        'name' => 'Thumberly Raja Siagian',
-        'active' => 'categories',
-        'email' => 'thumberlys@gmail.com',
-        'image' => '/img/thum.jpg',
-    ]);
-});
-Route::get('/posts', [PostController::class,'index']);
-
-//halaman single post
-Route::get('/posts/{post:slug}',[PostController::class,'show']);
-
-Route::get('/categories', function(){
-    return view('categories',[
-        'title' => 'Post Categories',
-        'active' => 'categories',
-        'categories' => Category::all()
-    ]);
+    return redirect()->route('login');
 });
 
-Route::get('/categories/{category:slug}', function(Category $category){
-    return view ('posts',[
-        'title' => "Post By Category : $category->name",
-        'active' => 'categories',
-        'posts' => $category->posts->load('category','author'),
-    ]);
-});
-Route::get('/authors/{author:username}', function(User $author){
-    return view ('posts',[
-        'title' => "Post By Author : $author->name",
-        'posts' => $author->posts->load('category','author')
-    ]);
-});
 
 Route::get('/login', [LoginController::class,'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class,'authenticate']);
@@ -64,4 +24,4 @@ Route::get('/dashboard',function(){
     return view('dashboard.index');
 })->middleware('auth');
 
-Route::resource('/dashboard/posts',DashboardPostController::class)->middleware('auth');
+Route::resource('/dashboard/attendance',FriendController::class)->middleware('auth');

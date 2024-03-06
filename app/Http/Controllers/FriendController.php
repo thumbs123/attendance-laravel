@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use Illuminate\Http\Request;
+use App\Models\Friend;
+use App\Http\Requests\StoreFriendRequest;
+use App\Http\Requests\UpdateFriendRequest;
 
-class DashboardPostController extends Controller
+class FriendController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('dashboard.posts.index',[
-            'post' => Post::where('user_id',auth()->user()->id)->get()
-        ]);
+        return view('dashboard.attendance.index');
     }
 
     /**
@@ -22,31 +21,29 @@ class DashboardPostController extends Controller
      */
     public function create()
     {
-        return view('dashboard.posts.create');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreFriendRequest $request)
     {
-        return $request;
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Friend $friend)
     {
-        return view('dashboard.posts.show',[
-            'post' => $post
-        ]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(Friend $friend)
     {
         //
     }
@@ -54,7 +51,7 @@ class DashboardPostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(UpdateFriendRequest $request, Friend $friend)
     {
         //
     }
@@ -62,7 +59,7 @@ class DashboardPostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(Friend $friend)
     {
         //
     }
