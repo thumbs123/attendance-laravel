@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('friends', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('nomor')->unique();
+            $table->string('sosial');
             $table->timestamps();
         });
     }

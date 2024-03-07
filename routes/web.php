@@ -24,4 +24,12 @@ Route::get('/dashboard',function(){
     return view('dashboard.index');
 })->middleware('auth');
 
-Route::resource('/dashboard/attendance',FriendController::class)->middleware('auth');
+
+
+Route::group([
+    'middleware'=>[
+        "auth"
+        ]
+    ], function(){
+        Route::resource('/dashboard/attendance',FriendController::class);
+    });

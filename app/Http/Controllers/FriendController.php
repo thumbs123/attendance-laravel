@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Friend;
 use App\Http\Requests\StoreFriendRequest;
 use App\Http\Requests\UpdateFriendRequest;
+use Illuminate\Http\Request;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class FriendController extends Controller
 {
@@ -13,7 +15,8 @@ class FriendController extends Controller
      */
     public function index()
     {
-        return view('dashboard.attendance.index');
+        $friends = Friend::all();
+        return view('dashboard.attendance.index', compact('friends'));
     }
 
     /**
@@ -21,15 +24,25 @@ class FriendController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.attendance.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFriendRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'nomor' => 'required',
+            'sosial' => 'required',
+        ]);
+        Friend::create([
+            'name'=>$request->name,
+            'nomor'=>$request->nomor,
+            'sosial'=>$request->sosial
+        ]);
+        return redirect('/dashboard/attendance')->with('success', 'Teman berhasil ditambahkan');
     }
 
     /**
@@ -37,15 +50,22 @@ class FriendController extends Controller
      */
     public function show(Friend $friend)
     {
-        //
+        return view('dashboard.posts.show',[
+            'friend' => $friend
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Friend $friend)
+    public function edit($id)
     {
-        //
+        $friend = Friend::findOrFail($id);
+        return view('dashboard.attendance.edit',[
+            "friend" => $friend
+        ]);
+
+        return redirect('/dashboard/attendance')->with('success', 'Teman berhasil diperbarui');
     }
 
     /**
@@ -59,8 +79,10 @@ class FriendController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Friend $friend)
+    public function destroy($id)
     {
-        //
+        $friend = Friend::findOrFail($id);
+        $friend->delete();
+        return redirect('/dashboard/attendance')->with('success', 'Teman berhasil dihapus');
     }
 }
