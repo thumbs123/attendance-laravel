@@ -17,10 +17,10 @@
     @csrf
     @method('post')
     <div class="mb-3">
-      <label for="nama" class="form-label">Nama</label>
-      <input type="text" class="form-control" id="nama" name="nama">
-      @error('nama')
-      <div class="invalid-feedback">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" id="name" name="name" value="{{ old('nama') }}">
+      @error('name')
+      <div class="invalid-feedback d-block">
         {{ $message }}
       </div>
   @enderror

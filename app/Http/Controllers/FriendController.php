@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Friend;
 use App\Http\Requests\StoreFriendRequest;
 use App\Http\Requests\UpdateFriendRequest;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -16,7 +18,9 @@ class FriendController extends Controller
     public function index()
     {
         $friends = Friend::all();
-        return view('dashboard.attendance.index', compact('friends'));
+        $quotes = $this->fetchApiQuotes();
+        $quotesData = json_decode($quotes->getContent(), true);
+        return view('dashboard.attendance.index', compact('friends','quotesData'));
     }
 
     /**
@@ -32,6 +36,7 @@ class FriendController extends Controller
      */
     public function store(Request $request)
     {
+        //return response()->json($request->all());
         $request->validate([
             'name' => 'required',
             'nomor' => 'required',
@@ -50,9 +55,7 @@ class FriendController extends Controller
      */
     public function show(Friend $friend)
     {
-        return view('dashboard.posts.show',[
-            'friend' => $friend
-        ]);
+
     }
 
     /**
@@ -95,5 +98,41 @@ class FriendController extends Controller
         $friend = Friend::findOrFail($id);
         $friend->delete();
         return redirect('/dashboard/attendance')->with('success', 'Teman berhasil dihapus');
+    }
+
+    public function fetchApiQuotes(){
+        $client = new Client();
+        $url = "https://api.api-ninjas.com/v1/quotes";
+        $api_key = "sr4wVId/cvWVpvlNAYmAmA==44SjCTAsD6rwXZj1";
+
+        try {
+            $response = $client->request('GET', $url,[
+                'headers'=>[
+                    'x-api-key'=>$api_key
+                ]
+            ]);
+            //return response()->json($response);
+            if($response->getStatusCode() ==200){
+                $response_ninja_api = json_decode($response->getBody()->getContents(),true);
+                return response()->json([
+                    'code' => 200,
+                    'message' => 'Data Fetched',
+                    'data' => $response_ninja_api
+                ]);
+            }else {
+                return response()->json([
+                    'code'=>404,
+                    'message'=>'Whoopss! Sepertinya ada kesalahan'
+                ]);
+            }
+        }catch(ClientException $e){
+            $response = $e->getResponse();
+            $response_ninja_api = json_decode($response->getBody()->getContents(),true);
+            return response()->json([
+                'code' => 400,
+                'message' => 'Whoopss',
+                'data' => $response_ninja_api
+            ]);
+        }
     }
 }

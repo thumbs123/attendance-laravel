@@ -8,7 +8,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/dashboard/attendance/">
+          <a class="nav-link" href="{{ route('attendance.index') }}">
             <span data-feather="file-text"></span>
             My Contact
           </a>

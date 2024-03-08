@@ -12,24 +12,25 @@ Route::get('/', function () {
 });
 
 
-Route::get('/login', [LoginController::class,'index'])->name('login')->middleware('guest');
+Route::get('/login', [LoginController::class,'index','fetchApiQuotes'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class,'authenticate']);
 Route::post('/logout', [LoginController::class,'logout']);
 
+Route::get('quotes',[FriendController::class,'fetchApiQuotes']);
 
 Route::get('/register', [RegisterController::class,'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class,'store']);
 
 Route::get('/dashboard',function(){
-    return view('dashboard.index');
-})->middleware('auth');
+    return view('dashboard.index');})->middleware('auth');
 
 
+Route::get('attendance',[FriendController::class,'store']);
 
 Route::group([
     'middleware'=>[
         "auth"
-        ]
+    ],
     ], function(){
         Route::resource('/dashboard/attendance',FriendController::class);
     });
