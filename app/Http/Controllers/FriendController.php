@@ -18,9 +18,7 @@ class FriendController extends Controller
     public function index()
     {
         $friends = Friend::all();
-        $quotes = $this->fetchApiQuotes();
-        $quotesData = json_decode($quotes->getContent(), true);
-        return view('dashboard.attendance.index', compact('friends','quotesData'));
+        return view('dashboard.attendance.index', compact('friends'));
     }
 
     /**
