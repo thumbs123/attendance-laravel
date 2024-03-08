@@ -8,12 +8,12 @@
   @if (session()->has('succes'))
       <div class="alert alert-success" role="alert">
         {{ session('success') }}
-      </div>
+      </div>  
   @endif
 
 
   <div class="col-lg-8">
-  <form method="POST" action="{{ route('friend') }}">
+  <form method="POST" action="{{ route('attendance.store') }}">
     @csrf
     @method('post')
     <div class="mb-3">

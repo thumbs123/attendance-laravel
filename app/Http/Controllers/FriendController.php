@@ -71,9 +71,20 @@ class FriendController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateFriendRequest $request, Friend $friend)
+    public function update(Request $request, $id )
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'nomor' => 'required',
+            'sosial' => 'required',
+        ]);
+        Friend::findOrFail($id)->update([
+            'name'=>$request->name,
+            'nomor'=>$request->nomor,
+            'sosial'=>$request->sosial
+        ]);
+
+        return redirect('/dashboard/attendance')->with('success', 'Teman berhasil update');
     }
 
     /**

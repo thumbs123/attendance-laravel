@@ -13,8 +13,8 @@
 
 
   <div class="col-lg-8">
-  <form method="POST" action="/dashboard/attendance">
-    @method('head')
+  <form method="POST" action="{{ route('attendance.update',$friend->id) }}">
+    @method('put')
     @csrf
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
