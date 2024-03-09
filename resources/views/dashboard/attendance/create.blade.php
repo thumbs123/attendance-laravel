@@ -52,19 +52,6 @@
       </div>
   @enderror
     </div>
-    <div class="mb-3">
-      <label for="user_id" class="form-label">User</label>
-      <select class="form-control" id="user_id" name="user_id">
-        @foreach($users as $user)
-          <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
-        @endforeach
-      </select>
-      @error('user_id')
-        <div class="invalid-feedback">
-          {{ $message }}
-        </div>
-      @enderror
-    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>

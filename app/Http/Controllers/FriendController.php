@@ -19,7 +19,12 @@ class FriendController extends Controller
     public function index()
     {
         $friends = Friend::all();
-        return view('dashboard.attendance.index', compact('friends'));
+        $quotes = $this->fetchApiQuotes();
+        //dd($quotes);
+        return view('dashboard.attendance.index',[
+            'friends' => $friends,
+            'quotes'=> $quotes
+        ]);
     }
 
     /**
@@ -119,11 +124,7 @@ class FriendController extends Controller
             //return response()->json($response);
             if($response->getStatusCode() ==200){
                 $response_ninja_api = json_decode($response->getBody()->getContents(),true);
-                return response()->json([
-                    'code' => 200,
-                    'message' => 'Data Fetched',
-                    'data' => $response_ninja_api
-                ]);
+                return $response_ninja_api[0]['quote'];
             }else {
                 return response()->json([
                     'code'=>404,
