@@ -9,12 +9,12 @@ class Friend extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+
+    protected $fillable = ['name','nomor','email','sosial'];
+    //protected $guarded = ['id','user_id'];
 
     public function User()
     {
         return $this->belongsTo(User::class);
     }
-
-
 }

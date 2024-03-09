@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Friend;
 use App\Http\Requests\StoreFriendRequest;
 use App\Http\Requests\UpdateFriendRequest;
+use App\Models\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
@@ -26,7 +27,8 @@ class FriendController extends Controller
      */
     public function create()
     {
-        return view('dashboard.attendance.create');
+        $users = User::all(); 
+        return view('dashboard.attendance.create',compact('users'));
     }
 
     /**
@@ -38,11 +40,13 @@ class FriendController extends Controller
         $request->validate([
             'name' => 'required',
             'nomor' => 'required',
+            'email' => 'required',
             'sosial' => 'required',
         ]);
         Friend::create([
             'name'=>$request->name,
             'nomor'=>$request->nomor,
+            'email'=>$request->email,
             'sosial'=>$request->sosial
         ]);
         return redirect('/dashboard/attendance')->with('success', 'Teman berhasil ditambahkan');
@@ -61,6 +65,7 @@ class FriendController extends Controller
      */
     public function edit($id)
     {
+        $users = User::all(); 
         $friend = Friend::findOrFail($id);
         return view('dashboard.attendance.edit',[
             "friend" => $friend
@@ -77,11 +82,13 @@ class FriendController extends Controller
         $request->validate([
             'name' => 'required',
             'nomor' => 'required',
+            'email' => 'required',
             'sosial' => 'required',
         ]);
         Friend::findOrFail($id)->update([
             'name'=>$request->name,
             'nomor'=>$request->nomor,
+            'email'=>$request->email,
             'sosial'=>$request->sosial
         ]);
 
@@ -100,7 +107,7 @@ class FriendController extends Controller
 
     public function fetchApiQuotes(){
         $client = new Client();
-        $url = "https://api.api-ninjas.com/v1/quotes";
+        $url = "https://api.api-ninjas.com/v1/quotes?category=happiness";
         $api_key = "sr4wVId/cvWVpvlNAYmAmA==44SjCTAsD6rwXZj1";
 
         try {

@@ -9,9 +9,10 @@
     <table class="table table-striped table-sm">
       <thead>
         <tr>
-          <th scope="col">#</th>
+          <th scope="col">No</th>
           <th scope="col">Nama</th>
-          <th scope="col">Nomor</th>
+          <th scope="col">Nomor Handphone</th>
+          <th scope="col">Email</th>
           <th scope="col">Sosial</th>
           <th scope="col">action</th>
         </tr>
@@ -22,6 +23,7 @@
           <td>{{ $loop->iteration }}</td>
           <td>{{ $friend->name }}</td>
           <td>{{ $friend->nomor }}</td>
+          <td>{{ $friend->email }}</td>
           <td>{{ $friend->sosial }}</td>
           <td>
             <a href="/dashboard/attendance/{{ $friend->id }}/edit" class="badge btn-warning"><span data-feather="edit"></span></a>

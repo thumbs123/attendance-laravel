@@ -2,55 +2,32 @@
 
 @section('container')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Update Data</h1>
+    <h1 class="h2">Create new Posts</h1>
   </div>
 
   @if (session()->has('succes'))
       <div class="alert alert-success" role="alert">
         {{ session('success') }}
-      </div>  
+      </div>
+      
   @endif
 
 
   <div class="col-lg-8">
-  <form method="post" action="{{ route('attendance.update',$friend->id) }}">
-    @csrf
+  <form method="POST" action="{{ route('attendance.update',$friend->id) }}">
     @method('put')
+    @csrf
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
       <input type="text" class="form-control" id="name" name="name" value="{{ $friend->name }}">
-      @error('name')
-      <div class="invalid-feedback d-block">
-        {{ $message }}
-      </div>
-  @enderror
     </div>
     <div class="mb-3">
       <label for="nomor" class="form-label">Nomor</label>
       <input type="text" class="form-control" id="nomor" name="nomor" value="{{ $friend->nomor }}">
-      @error('nomor')
-      <div class="invalid-feedback">
-        {{ $message }}
-      </div>
-  @enderror
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
-      <input type="text" class="form-control" id="email" name="email" value="{{ $friend->email }}">
-      @error('email')
-      <div class="invalid-feedback">
-        {{ $message }}
-      </div>
-  @enderror
-    </div>
-    <div class="mb-3">
-      <label for="sosial" class="form-label">Sosial</label>
+      <label for="sosial" class="form-label">Sosmed</label>
       <input type="text" class="form-control" id="sosial" name="sosial" value="{{ $friend->sosial }}">
-      @error('sosial')
-      <div class="invalid-feedback">
-        {{ $message }}
-      </div>
-  @enderror
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>

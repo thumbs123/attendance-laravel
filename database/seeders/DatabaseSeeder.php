@@ -17,18 +17,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
         
         User::create([
             'name' => 'Thumberly Raja Siagian',
             'email' => 'thumberlys@gmail.com',
+            'friend_id'=> 1,
             'password' => bcrypt('password')
         ]);
-
+        
         Friend::create([
-            'name' => 'Jojas',
-            'nomor' => '93429647264',
-            'sosial' => '@jowjow',
+            'name' => 'bujes',
+            'nomor' => '09868',
+            'email' => 'adibaf@gmail.com',
+            'sosial' => '@thumbthumbs',
+            'user_id' => 1,
         ]);
+
 }
 }
