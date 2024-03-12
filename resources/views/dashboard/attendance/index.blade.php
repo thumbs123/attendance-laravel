@@ -26,6 +26,7 @@
           <td>{{ $friend->email }}</td>
           <td>{{ $friend->sosial }}</td>
           <td>
+            {{-- <a href="/dashboard/attendance/{{ $friend->id }}/show" class="badge btn-primary"><span data-feather="eye"></span></a> --}}
             <a href="/dashboard/attendance/{{ $friend->id }}/edit" class="badge btn-warning"><span data-feather="edit"></span></a>
             <form action="/dashboard/attendance/{{ $friend->id }}" class="d-inline" method="POST">
               @method('delete')

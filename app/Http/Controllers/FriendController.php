@@ -41,7 +41,7 @@ class FriendController extends Controller
      */
     public function store(Request $request)
     {
-        //return response()->json($request->all());
+        // return response()->json($request->all());
         $request->validate([
             'name' => 'required',
             'nomor' => 'required',
@@ -61,14 +61,11 @@ class FriendController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Friend $friend)
+    public function show($id)
     {
-        $friends = Friend::all();
-        $quotes = $this->fetchApiQuotes();
-        //dd($quotes);
-        return view('dashboard.attendance.index',[
-            'friends' => $friends,
-            'quotes'=> $quotes
+        $friend = Friend::findOrFail($id);
+        return view('dashboard.attendance.show',[
+            "friend" => $friend
         ]);
     }
 
@@ -90,19 +87,20 @@ class FriendController extends Controller
      */
     public function update(Request $request, $id )
     {
+        // return response()->json($request->all());
         $request->validate([
             'name' => 'required',
             'nomor' => 'required',
             'email' => 'required',
             'sosial' => 'required',
-            'user_id' => 'required'
 
         ]);
         Friend::findOrFail($id)->update([
             'name'=>$request->name,
             'nomor'=>$request->nomor,
             'email'=>$request->email,
-            'sosial'=>$request->sosial
+            'sosial'=>$request->sosial,
+            'user_id' => $request->user()->id
             
         ]);
 
