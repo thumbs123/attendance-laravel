@@ -52,7 +52,8 @@ class FriendController extends Controller
             'name'=>$request->name,
             'nomor'=>$request->nomor,
             'email'=>$request->email,
-            'sosial'=>$request->sosial
+            'sosial'=>$request->sosial,
+            'user_id' => $request->user()->id
         ]);
         return redirect('/dashboard/attendance')->with('success', 'Teman berhasil ditambahkan');
     }
@@ -62,7 +63,13 @@ class FriendController extends Controller
      */
     public function show(Friend $friend)
     {
-
+        $friends = Friend::all();
+        $quotes = $this->fetchApiQuotes();
+        //dd($quotes);
+        return view('dashboard.attendance.index',[
+            'friends' => $friends,
+            'quotes'=> $quotes
+        ]);
     }
 
     /**
@@ -70,7 +77,6 @@ class FriendController extends Controller
      */
     public function edit($id)
     {
-        $users = User::all(); 
         $friend = Friend::findOrFail($id);
         return view('dashboard.attendance.edit',[
             "friend" => $friend
@@ -89,12 +95,15 @@ class FriendController extends Controller
             'nomor' => 'required',
             'email' => 'required',
             'sosial' => 'required',
+            'user_id' => 'required'
+
         ]);
         Friend::findOrFail($id)->update([
             'name'=>$request->name,
             'nomor'=>$request->nomor,
             'email'=>$request->email,
             'sosial'=>$request->sosial
+            
         ]);
 
         return redirect('/dashboard/attendance')->with('success', 'Teman berhasil update');

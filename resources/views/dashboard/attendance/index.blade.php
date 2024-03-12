@@ -2,11 +2,10 @@
 
 @section('container')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">My Contact</h1>
-    <h1>penyemangat {{ $quotes }}</h1>
+    <h1 class="h2">My Contact </h1>
   </div>
   <div class="table-responsive col-lg-8">
-    <a href="/dashboard/attendance/create" class="btn btn-primary mb-3">Tambah data</a>
+    <a href="/dashboard/attendance/create" class="btn btn-primary mb-3"><span data-feather="plus"></span>Tambah data</a>
     <table class="table table-striped table-sm">
       <thead>
         <tr>
@@ -31,7 +30,7 @@
             <form action="/dashboard/attendance/{{ $friend->id }}" class="d-inline" method="POST">
               @method('delete')
               @csrf
-              <button class="badge btn-danger border-0" onclick="return confirm('Ingin Menghapus Data')"><span data-feather="x-circle"></span></button>
+              <button class="badge btn-danger border-0" onclick="return confirm('Ingin Menghapus Data')"><span data-feather="trash-2"></span></button>
             </form>
           </td>
         </tr>

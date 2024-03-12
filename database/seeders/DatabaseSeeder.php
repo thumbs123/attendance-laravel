@@ -25,6 +25,13 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password')
         ]);
         
+        User::create([
+            'name' => 'Endy',
+            'email' => 'edi@gmail.com',
+            'friend_id'=> 1,
+            'password' => bcrypt('password')
+        ]);
+        
         Friend::create([
             'name' => 'bujes',
             'nomor' => '09868',
@@ -32,6 +39,5 @@ class DatabaseSeeder extends Seeder
             'sosial' => '@thumbthumbs',
             'user_id' => 1,
         ]);
-
 }
 }
